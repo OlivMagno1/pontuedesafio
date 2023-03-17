@@ -27,7 +27,8 @@ const Login = async () => {
   }).then((res) => res.json());
   if (res.token_type == "Bearer") {
     localStorage.setItem("token", res.access_token);
-    console.log("entrou");
+    localStorage.setItem("id", res.aluno_id);
+    localStorage.setItem("expiration", res.expires_at);
     router.push("/");
   } else {
     check_alert.value = true;
