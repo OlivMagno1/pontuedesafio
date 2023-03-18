@@ -1,51 +1,26 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { BuscaRedacao, BuscaRedAluno } from "../assets/functions/functions.js";
 
-const tabela = ref("");
+const tabela = ref([]);
 const tabelaPage = ref(0);
 const redacaoSelect = ref(-1);
-const redacaoZoom = ref("");
+const redacaoZoom = ref({
+  id: "",
+  aluno: {
+    id: "",
+    nome_completo: "",
+  },
+  numero: "",
+  created_at: "",
+  urls: [],
+});
 
-const BuscaRedacao = async (red_id) => {
-  const res = await fetch(`https://desafio.pontue.com.br/redacao/${red_id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Request-Headers": "authorization, x-requested-with",
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  }).then((res) => res.json());
-  redacaoZoom.value = res.data;
-};
-
-const BuscaRedAluno = async () => {
-  const res = await fetch(
-    `https://desafio.pontue.com.br/index/aluno/${localStorage.getItem("id")}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Request-Headers": "authorization, x-requested-with",
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    }
-  ).then((res) => res.json());
-  tabela.value = res.data;
-};
-
-const checkActual = (index) => {
-  if (redacaoSelect.value === index) return true;
-  else return false;
-};
-
-const checkFirstPage = () => {
-  if (tabelaPage.value === 0) return true;
-  else return false;
-};
-
-const checkLastPage = () => {
-  if (tabelaPage.value + 11 > tabela.value.length) return true;
-  else return false;
+const selectRedacao = (entry, index) => {
+  BuscaRedacao(entry.id).then(function (result) {
+    redacaoZoom.value = result;
+    redacaoSelect.value = index + tabelaPage.value;
+  });
 };
 
 const nextPage = () => {
@@ -60,43 +35,45 @@ const prevPage = () => {
 };
 
 onMounted(() => {
-  BuscaRedAluno();
+  BuscaRedAluno().then(function (result) {
+    tabela.value = result;
+  });
 });
 </script>
 
 <template>
-  <h1>Página de entrada</h1>
-  <h2>Redação selecionada: {{ redacaoSelect }}</h2>
+  <h1>Portal do aluno</h1>
   <div class="header">
-    <p>Número</p>
-    <p>Data</p>
+    <p>Número da redação</p>
+    <p>Data de criação</p>
   </div>
   <div
     class="table"
     v-for="(entry, index) in tabela.slice(tabelaPage, tabelaPage + 10)"
-    @click="
-      () => {
-        redacaoSelect = index + tabelaPage;
-        BuscaRedacao(entry.id);
-      }
-    "
+    @click="selectRedacao(entry, index)"
     :key="index"
-    :class="{ chosen: checkActual(index + tabelaPage) }"
+    :class="{ chosen: index + tabelaPage == redacaoSelect }"
   >
     <p>{{ entry.numero }}</p>
     <p>{{ entry.created_at }}</p>
   </div>
   <div class="nav">
-    <button :class="{ off: checkFirstPage() }" @click="prevPage">
+    <button :class="{ off: tabelaPage == 0 }" @click="prevPage">
       Página anterior
     </button>
     <h2>{{ tabelaPage / 10 + 1 }}</h2>
-    <button :class="{ off: checkLastPage() }" @click="nextPage">
+    <button :class="{ off: tabelaPage + 11 > tabela.length }" @click="nextPage">
       Página seguinte
     </button>
   </div>
-  <div class="zoom">
-    <p>{{ redacaoZoom }}</p>
+  <div class="details" v-if="redacaoSelect != -1">
+    <span @click="redacaoSelect = -1">voltar</span>
+    <h2>{{ redacaoZoom.aluno.nome_completo }}</h2>
+    <p>{{ redacaoZoom.numero }}</p>
+    <p>{{ redacaoZoom.created_at }}</p>
+    <div v-for="(urls, urlindex) in redacaoZoom.urls" :key="urlindex">
+      <p>{{ urls.url }}</p>
+    </div>
   </div>
 </template>
 
@@ -108,6 +85,12 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
   width: 30rem;
+  transition: 0.3s;
+}
+
+.table:hover {
+  background-color: black;
+  color: white;
 }
 
 .nav {
@@ -122,8 +105,19 @@ onMounted(() => {
 }
 
 .chosen {
-  height: 10rem;
   background-color: black;
   color: white;
+}
+
+.details {
+  width: 100vw;
+  height: 100vh;
+  color: white;
+  background-color: black;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 </style>
