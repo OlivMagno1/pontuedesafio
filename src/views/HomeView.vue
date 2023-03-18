@@ -1,14 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import {
-  BuscaRedacao,
-  BuscaRedAluno,
-  BuscaImagem,
-} from "../assets/functions/functions.js";
+import { BuscaRedacao, BuscaRedAluno } from "../assets/functions/functions.js";
 
 const tabela = ref([]);
 const tabelaPage = ref(0);
 const redacaoSelect = ref(-1);
+const imagemURL = ref("");
 const redacaoZoom = ref({
   id: "",
   aluno: {
@@ -17,13 +14,23 @@ const redacaoZoom = ref({
   },
   numero: "",
   created_at: "",
-  urls: [],
+  urls: [
+    {
+      id: "",
+      redacao_id: "",
+      correcao_id: "",
+      url: "",
+      anotacoes: "",
+      comentarios: "",
+    },
+  ],
 });
 
 const selectRedacao = (entry, index) => {
-  BuscaRedacao(entry.id).then(function (result) {
-    redacaoZoom.value = result;
+  BuscaRedacao(entry.id).then(function (redacaoResult) {
+    redacaoZoom.value = redacaoResult;
     redacaoSelect.value = index + tabelaPage.value;
+    imagemURL.value = redacaoResult.urls[0].url;
   });
 };
 
@@ -76,9 +83,8 @@ onMounted(() => {
     <p>{{ redacaoZoom.numero }}</p>
     <p>{{ redacaoZoom.created_at }}</p>
     <div v-for="(urls, urlindex) in redacaoZoom.urls" :key="urlindex">
-      <p @click="BuscaImagem(urls.url)">
-        {{ urls.url }}
-      </p>
+      <p>{{ urls.url }}</p>
+      <img :src="imagemURL" />
     </div>
   </div>
 </template>
