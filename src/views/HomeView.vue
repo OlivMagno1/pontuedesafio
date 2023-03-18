@@ -1,6 +1,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { BuscaRedacao, BuscaRedAluno } from "../assets/functions/functions.js";
+import {
+  BuscaRedacao,
+  BuscaRedAluno,
+  BuscaImagem,
+} from "../assets/functions/functions.js";
 
 const tabela = ref([]);
 const tabelaPage = ref(0);
@@ -72,7 +76,9 @@ onMounted(() => {
     <p>{{ redacaoZoom.numero }}</p>
     <p>{{ redacaoZoom.created_at }}</p>
     <div v-for="(urls, urlindex) in redacaoZoom.urls" :key="urlindex">
-      <p>{{ urls.url }}</p>
+      <p @click="BuscaImagem(urls.url)">
+        {{ urls.url }}
+      </p>
     </div>
   </div>
 </template>

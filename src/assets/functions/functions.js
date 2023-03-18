@@ -26,4 +26,20 @@ const BuscaRedAluno = async () => {
   return res.data;
 };
 
-export { BuscaRedacao, BuscaRedAluno };
+const BuscaImagem = async (link) => {
+  const res = await fetch(`${link}`, {
+    method: "GET",
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw Error(res.statusText);
+      }
+      res.blob();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  console.log(res);
+};
+
+export { BuscaRedacao, BuscaRedAluno, BuscaImagem };
