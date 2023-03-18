@@ -29,7 +29,9 @@ const BuscaRedAluno = async () => {
 const BuscaImagem = async (link) => {
   const res = await fetch(`${link}`, {
     method: "GET",
-  }).then((res) => res.blob());
+  })
+    .then((res) => res.blob())
+    .catch((error) => console.log(error));
   return res;
 };
 

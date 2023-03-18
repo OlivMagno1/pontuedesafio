@@ -1,11 +1,16 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { BuscaRedacao, BuscaRedAluno } from "../assets/functions/functions.js";
+import {
+  BuscaRedacao,
+  BuscaRedAluno,
+  BuscaImagem,
+} from "../assets/functions/functions.js";
 
 const tabela = ref([]);
 const tabelaPage = ref(0);
 const redacaoSelect = ref(-1);
 const imagemURL = ref("");
+const existeImagem = ref(true);
 const redacaoZoom = ref({
   id: "",
   aluno: {
@@ -31,6 +36,9 @@ const selectRedacao = (entry, index) => {
     redacaoZoom.value = redacaoResult;
     redacaoSelect.value = index + tabelaPage.value;
     imagemURL.value = redacaoResult.urls[0].url;
+  });
+  BuscaImagem(imagemURL.value).then(function (imagem) {
+    existeImagem.value = imagem != undefined && imagem != null;
   });
 };
 
@@ -82,8 +90,7 @@ onMounted(() => {
     <h2>{{ redacaoZoom.aluno.nome_completo }}</h2>
     <p>{{ redacaoZoom.numero }}</p>
     <p>{{ redacaoZoom.created_at }}</p>
-    <div v-for="(urls, urlindex) in redacaoZoom.urls" :key="urlindex">
-      <p>{{ urls.url }}</p>
+    <div v-for="urlindex in redacaoZoom.urls" :key="urlindex">
       <img :src="imagemURL" />
     </div>
   </div>
