@@ -44,7 +44,7 @@ const Login = async () => {
     <form @submit.prevent="Login">
       <label>
         <span>Informe o e-mail de cadastro:</span>
-        <input type="email" v-model="email" placeholder="seu@email.com" />
+        <input v-model="email" placeholder="seu@email.com" />
       </label>
       <label>
         <span>Informe a sua senha:</span>
