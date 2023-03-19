@@ -18,13 +18,15 @@ export default {
       <p>
         Data de criação: <span>{{ redacaoZoom.created_at }}</span>
       </p>
-      <form>
-        <input />
-        <button class="selectFile">Selecionar arquivo</button>
-      </form>
-      <div v-for="(url, urlindex) in imagemURL" :key="urlindex">
-        <img :src="url" />
+      <p>Selecione as redações que deseja remover abaixo</p>
+      <div class="imageContainer">
+        <div v-for="(url, urlindex) in imagemURL" :key="urlindex">
+          <img :src="url" />
+        </div>
       </div>
+      <p>Selecione os arquivos para adicionar</p>
+      <input class="input" type="file" name="file" multiple ref="files" />
+      <button @click="sendFile()">Criar</button>
     </div>
     <div class="clickToClose" @click="this.fecharModal()"></div>
   </div>
@@ -88,7 +90,7 @@ h2 {
 
 .details p {
   font-size: clamp(0.6rem, 0.52rem + 0.4vw, 1rem);
-  margin-bottom: 1rem;
+  margin-top: 0.5rem;
 }
 
 span {
@@ -97,17 +99,21 @@ span {
 }
 
 .imageContainer {
-  margin-top: clamp(0rem, -0.6rem + 3vw, 3rem);
   width: clamp(18rem, 14.4rem + 18vw, 36rem);
+  height: 10rem;
   display: flex;
   flex-flow: row nowrap;
-  align-items: center;
-  justify-content: space-evenly;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background-color: var(--clear0);
+  overflow-x: scroll;
 }
 
 img {
-  max-width: clamp(15rem, 13rem + 10vw, 25rem);
+  max-width: 10rem;
   height: auto;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
 }
 
 .close {
@@ -124,6 +130,25 @@ img {
 .close:hover {
   background-color: white;
   color: var(--orange);
+}
+
+button:not(.selectFile) {
+  margin-top: 1rem;
+  align-self: center;
+  font-family: "Museo";
+  font-weight: 700;
+  color: var(--clear0);
+  background-color: var(--orange);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: 0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  color: var(--primary);
+  background-color: var(--clear0);
 }
 
 .off {

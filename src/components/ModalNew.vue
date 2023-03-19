@@ -8,20 +8,19 @@ export default {
       for (let file of this.$refs.files.files) {
         formData.append("file", file);
       }
-      let res = await fetch(
+      console.log(formData);
+      const res = await fetch(
         `https://desafio.pontue.com.br/alunos/redacao/create`,
         {
           method: "POST",
           headers: {
-            "Content-Type": "multipart/form-data",
-            "Access-Control-Request-Headers": "authorization",
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
           body: formData,
+          redirect: "follow",
         }
       ).then((res) => res.json());
       console.log(res);
-      this.fecharModal();
     },
   },
 };
@@ -35,7 +34,7 @@ export default {
     </div>
     <div class="details">
       <input class="input" type="file" name="file" multiple ref="files" />
-      <button @click="sendFile">Criar</button>
+      <button @click="sendFile()">Criar</button>
     </div>
     <div class="clickToClose" @click="this.fecharModal()"></div>
   </div>

@@ -41,5 +41,4 @@ const Logout = async () => {
   localStorage.removeItem("id");
   localStorage.removeItem("expiration");
 };
-
 export { BuscaRedacao, BuscaRedAluno, BuscaImagem, Logout };
