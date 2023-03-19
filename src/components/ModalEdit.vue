@@ -99,13 +99,14 @@ span {
 }
 
 .imageContainer {
+  margin-top: 0.5rem;
   width: clamp(18rem, 14.4rem + 18vw, 36rem);
   height: 10rem;
   display: flex;
   flex-flow: row nowrap;
   align-items: flex-start;
   justify-content: flex-start;
-  background-color: var(--clear0);
+  background-color: var(--clear1);
   overflow-x: scroll;
 }
 
