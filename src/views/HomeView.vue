@@ -39,6 +39,12 @@ const redacaoZoom = ref({
   ],
 });
 
+const carrega = () => {
+  BuscaRedAluno().then(function (result) {
+    tabela.value = result;
+  });
+};
+
 const nextPage = () => {
   if (tabelaPage.value + 10 < tabela.value.length)
     tabelaPage.value = tabelaPage.value + 10;
@@ -106,9 +112,7 @@ const fecharModalVer = () => {
 };
 
 onMounted(() => {
-  BuscaRedAluno().then(function (result) {
-    tabela.value = result;
-  });
+  carrega();
 });
 </script>
 
@@ -158,6 +162,7 @@ onMounted(() => {
     <ModalDelete
       :abrirModal="modalDelete"
       :fecharModal="fecharModalDelete"
+      :recarrega="carrega"
       :redacaoZoom="redacaoZoom"
     />
     <ModalEdit
@@ -241,6 +246,7 @@ onMounted(() => {
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-evenly;
+  cursor: pointer;
 }
 
 .tools p {
@@ -253,6 +259,7 @@ onMounted(() => {
   background-color: var(--clear1);
   border-radius: 0.5rem;
   transition: 0.2s;
+  cursor: pointer;
 }
 
 .nav {

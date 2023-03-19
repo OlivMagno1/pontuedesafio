@@ -1,7 +1,24 @@
 <script>
 export default {
   name: "ModalDelete",
-  props: ["abrirModal", "fecharModal", "redacaoZoom"],
+  props: ["abrirModal", "fecharModal", "recarrega", "redacaoZoom"],
+  methods: {
+    async Deletar(red_id) {
+      const res = await fetch(
+        `https://desafio.pontue.com.br/redacao/${red_id}/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            "Access-Control-Request-Headers": "authorization",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      ).then((res) => res.json());
+      console.log(res);
+      this.fecharModal();
+      this.recarrega();
+    },
+  },
 };
 </script>
 
@@ -19,7 +36,7 @@ export default {
       <p>
         Data de criação: <span>{{ redacaoZoom.created_at }}</span>
       </p>
-      <button @click="this.fecharModal()">Excluir</button>
+      <button @click="Deletar(redacaoZoom.id)">Excluir</button>
     </div>
   </div>
 </template>
