@@ -2,13 +2,26 @@
   <router-view />
 </template>
 
+<script>
+//vh fix
+const documentHeight = () => {
+  const doc = document.documentElement;
+  var vh = window.innerHeight * 0.01;
+  doc.style.setProperty("--doc-vh", `${vh}px`);
+};
+window.addEventListener("resize", documentHeight);
+documentHeight();
+//End vh fix
+</script>
+
 <style>
 :root {
+  --doc-vh: 0;
   --primary: #532e94;
   --secondary: #403b44;
   --text: #272727;
   --accent: #cf007f;
-  --purple: #482683;
+  --purple: #9a2e9e;
   --cyan: #35b9c8;
   --orange: #ed8a26;
   --clear0: #ffffff;
