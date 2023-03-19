@@ -35,4 +35,11 @@ const BuscaImagem = async (link) => {
   return res;
 };
 
-export { BuscaRedacao, BuscaRedAluno, BuscaImagem };
+const Logout = async () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("token_type");
+  localStorage.removeItem("id");
+  localStorage.removeItem("expiration");
+};
+
+export { BuscaRedacao, BuscaRedAluno, BuscaImagem, Logout };

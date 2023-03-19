@@ -8,7 +8,10 @@ import {
   BuscaRedacao,
   BuscaRedAluno,
   BuscaImagem,
+  Logout,
 } from "../assets/functions/functions.js";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const nomeAluno = ref("");
 const tabela = ref([]);
@@ -39,6 +42,11 @@ const redacaoZoom = ref({
     },
   ],
 });
+
+const sair = () => {
+  Logout();
+  router.push("/login");
+};
 
 const carrega = () => {
   BuscaRedAluno().then(function (result) {
@@ -127,10 +135,14 @@ onMounted(() => {
   <div class="backdrop">
     <div class="menu">
       <img class="logo" src="@/assets/pontue_logo.png" />
-      <h2 class="nomeAluno">{{ nomeAluno }}</h2>
-      <p class="nomeAluno" title="não implementado">Logout</p>
+      <p class="nomeAluno">{{ nomeAluno }}</p>
+      <p class="logout" @click="sair()">Logout</p>
     </div>
-    <span @click="abrirModalNew()" class="newRed">
+    <span
+      title="Criar uma nova redação"
+      @click="abrirModalNew()"
+      class="newRed"
+    >
       <font-awesome-icon icon="fa-solid fa-plus" />
     </span>
     <div class="header">
@@ -169,16 +181,18 @@ onMounted(() => {
         class="navButton"
         :class="{ off: tabelaPage == 0 }"
         @click="prevPage"
+        title="Página anterior"
       >
         <font-awesome-icon icon="fa-solid fa-chevron-left" />
       </button>
-      <h2 class="navCounter">{{ tabelaPage / 10 + 1 }}</h2>
+      <h2 title="Página atual" class="navCounter">{{ tabelaPage / 10 + 1 }}</h2>
       <button
         class="navButton"
         :class="{
           off: tabelaPage + 11 > tabela.length,
         }"
         @click="nextPage"
+        title="Próxima página"
       >
         <font-awesome-icon icon="fa-solid fa-chevron-right" />
       </button>
@@ -381,5 +395,18 @@ onMounted(() => {
 
 .nomeAluno {
   font-size: clamp(0.8rem, 0.68rem + 0.6vw, 1.4rem);
+}
+
+.logout {
+  font-size: clamp(0.8rem, 0.68rem + 0.6vw, 1.4rem);
+  cursor: pointer;
+  padding: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
+  border-radius: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
+  transition: 0.2s;
+}
+
+.logout:hover {
+  background-color: var(--accent);
+  color: var(--clear0);
 }
 </style>
