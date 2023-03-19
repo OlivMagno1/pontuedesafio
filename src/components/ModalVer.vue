@@ -1,7 +1,22 @@
 <script>
+import { ref } from "vue";
 export default {
   name: "ModalVer",
   props: ["abrirModal", "fecharModal", "redacaoZoom", "imagemURL"],
+  setup() {
+    const actual = ref(0);
+
+    const nextImage = (url) => {
+      if (actual.value < url.length - 1) actual.value = actual.value + 1;
+      return;
+    };
+
+    const prevImage = () => {
+      if (actual.value > 0) actual.value = actual.value - 1;
+      return;
+    };
+    return { actual, nextImage, prevImage };
+  },
 };
 </script>
 
@@ -9,7 +24,15 @@ export default {
   <div class="modal-background" v-if="abrirModal == true">
     <div class="header">
       <h2>Visualização</h2>
-      <span class="close" @click="this.fecharModal()">voltar</span>
+      <span
+        class="close"
+        @click="
+          this.fecharModal();
+          actual = 0;
+        "
+      >
+        voltar
+      </span>
     </div>
     <div class="details">
       <p>
@@ -18,17 +41,41 @@ export default {
       <p>
         Data de criação: <span>{{ redacaoZoom.created_at }}</span>
       </p>
-      <div v-for="(url, urlindex) in imagemURL" :key="urlindex">
-        <img :src="url" />
+      <div class="imageContainer">
+        <p
+          :class="{ off: actual <= 0 }"
+          @click="prevImage()"
+          title="Página anterior"
+        >
+          <font-awesome-icon icon="fa-solid fa-chevron-left" />
+        </p>
+        <div v-for="(url, urlindex) in imagemURL" :key="urlindex">
+          <img v-if="urlindex == actual" :src="url" />
+        </div>
+        <p
+          :class="{ off: actual >= imagemURL.length - 1 }"
+          @click="nextImage(imagemURL)"
+          title="Próxima página"
+        >
+          <font-awesome-icon icon="fa-solid fa-chevron-right" />
+        </p>
       </div>
     </div>
+    <div
+      class="clickToClose"
+      @click="
+        this.fecharModal();
+        actual = 0;
+      "
+    />
   </div>
 </template>
 
 <style scoped>
 .header {
+  z-index: 150;
   position: relative;
-  background-color: var(--primary);
+  background-color: var(--accent);
   color: var(--clear0);
   border-radius: 1rem 1rem 0 0;
   height: 3rem;
@@ -46,9 +93,7 @@ h2 {
   cursor: default;
 }
 .modal-background {
-  z-index: 150;
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.3);
   top: 0;
   right: 0;
   bottom: 0;
@@ -59,7 +104,17 @@ h2 {
   align-items: center;
 }
 
+.clickToClose {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 .details {
+  z-index: 150;
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
@@ -79,8 +134,16 @@ span {
   opacity: 0.8;
 }
 
+.imageContainer {
+  width: 36rem;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 img {
-  width: 20rem;
+  max-width: 25rem;
   height: auto;
 }
 
@@ -96,6 +159,6 @@ img {
 
 .close:hover {
   background-color: white;
-  color: var(--primary);
+  color: var(--accent);
 }
 </style>

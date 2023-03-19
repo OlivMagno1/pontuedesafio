@@ -38,17 +38,20 @@ export default {
       </p>
       <button @click="Deletar(redacaoZoom.id)">Excluir</button>
     </div>
+    <div class="clickToClose" @click="this.fecharModal()"></div>
   </div>
 </template>
 
 <style scoped>
 .header {
+  z-index: 150;
   position: relative;
   background-color: var(--danger);
   color: var(--clear0);
-  border-radius: 1rem 1rem 0 0;
-  height: 3rem;
-  width: 24rem;
+  border-radius: clamp(0.3rem, 0.16rem + 0.7vw, 1rem)
+    clamp(0.3rem, 0.16rem + 0.7vw, 1rem) 0 0;
+  height: clamp(1.5rem, 1.2rem + 1.5vw, 3rem);
+  width: clamp(14rem, 12rem + 10vw, 24rem);
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -57,14 +60,13 @@ export default {
 
 h2 {
   margin-left: 1rem;
-  font-size: 1.4rem;
+  font-size: clamp(0.8rem, 0.68rem + 0.6vw, 1.4rem);
   font-weight: 700;
   cursor: default;
 }
+
 .modal-background {
-  z-index: 150;
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.3);
   top: 0;
   right: 0;
   bottom: 0;
@@ -75,14 +77,25 @@ h2 {
   align-items: center;
 }
 
+.clickToClose {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 .details {
+  z-index: 150;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  width: 21rem;
-  height: 9rem;
-  padding: 1.5rem;
-  border-radius: 0 0 1rem 1rem;
+  width: clamp(12.25rem, 10.5rem + 8.75vw, 21rem);
+  height: clamp(7.5rem, 7.2rem + 1.5vw, 9rem);
+  padding: clamp(0.875rem, 0.75rem + 0.625vw, 1.5rem);
+  border-radius: 0 0 clamp(0.3rem, 0.16rem + 0.7vw, 1rem)
+    clamp(0.3rem, 0.16rem + 0.7vw, 1rem);
   background-color: var(--clear2);
 }
 
@@ -105,8 +118,8 @@ button {
   font-weight: 700;
   color: var(--clear0);
   background-color: var(--danger);
-  border-radius: 0.5rem;
-  padding: 1rem;
+  border-radius: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
+  padding: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
   border: 0;
   cursor: pointer;
   transition: 0.2s;
@@ -118,11 +131,12 @@ button:hover {
 }
 
 .close {
+  font-size: clamp(0.6rem, 0.52rem + 0.4vw, 1rem);
   position: absolute;
   margin-right: 1rem;
   right: 0;
   cursor: pointer;
-  border-radius: 0.5rem;
+  border-radius: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
   padding: 0.2rem;
   transition: 0.2s;
 }
@@ -130,5 +144,9 @@ button:hover {
 .close:hover {
   background-color: white;
   color: var(--primary);
+}
+
+p {
+  font-size: clamp(0.6rem, 0.52rem + 0.4vw, 1rem);
 }
 </style>

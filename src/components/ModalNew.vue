@@ -39,11 +39,13 @@ export default {
         <button @click="sendFile">Criar</button>
       </div>
     </div>
+    <div class="clickToClose" @click="this.fecharModal()"></div>
   </div>
 </template>
 
 <style scoped>
 .header {
+  z-index: 150;
   position: relative;
   background-color: var(--primary);
   color: var(--clear0);
@@ -62,10 +64,9 @@ h2 {
   font-weight: 700;
   cursor: default;
 }
+
 .modal-background {
-  z-index: 150;
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.3);
   top: 0;
   right: 0;
   bottom: 0;
@@ -76,7 +77,17 @@ h2 {
   align-items: center;
 }
 
+.clickToClose {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 .details {
+  z-index: 150;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
