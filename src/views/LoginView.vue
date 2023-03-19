@@ -40,14 +40,14 @@ const Login = async () => {
 
 <template>
   <div>
-    <h1>Desafio Pontue!</h1>
+    <h1>Pontue!</h1>
     <form @submit.prevent="Login">
       <label>
-        <span>Informe o e-mail de cadastro:</span>
+        <span>e-mail</span>
         <input v-model="email" placeholder="seu@email.com" />
       </label>
       <label>
-        <span>Informe a sua senha:</span>
+        <span>senha:</span>
         <input type="password" v-model="password" placeholder="••••••••" />
         <span class="alert">
           {{ alert_message }}
@@ -59,8 +59,23 @@ const Login = async () => {
 </template>
 
 <style scoped>
-form {
+form,
+label {
   display: flex;
   flex-flow: column nowrap;
+}
+
+form {
+  background-color: var(--primary);
+  width: 24rem;
+  height: 30rem;
+  border-radius: 1rem;
+}
+
+label {
+  color: var(--clear0);
+  width: 18rem;
+  font-family: "Museo";
+  font-weight: 100;
 }
 </style>
