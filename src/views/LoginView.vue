@@ -104,7 +104,7 @@ label span {
 input:not(.submit) {
   width: clamp(16rem, 14.8rem + 6vw, 22rem);
   border-radius: 0.3rem;
-  border: 1px solid gray;
+  border: 1px solid var(--clear3);
   padding: 0.3rem;
 }
 
@@ -122,6 +122,7 @@ img {
   background-color: var(--primary);
   color: var(--clear0);
   transition: 0.2s;
+  cursor: pointer;
 }
 
 .submit:hover {
