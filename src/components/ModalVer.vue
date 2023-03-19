@@ -3,6 +3,12 @@ import { ref } from "vue";
 export default {
   name: "ModalVer",
   props: ["abrirModal", "fecharModal", "redacaoZoom", "imagemURL"],
+  methods: {
+    replaceByDefault(e) {
+      e.target.src = require(`@/assets/images/placeholder.jpg`);
+      e.target.title = "Imagem não encontrada";
+    },
+  },
   setup() {
     const actual = ref(0);
 
@@ -50,7 +56,7 @@ export default {
           <font-awesome-icon icon="fa-solid fa-chevron-left" />
         </p>
         <div v-for="(url, urlindex) in imagemURL" :key="urlindex">
-          <img v-if="urlindex == actual" :src="url" />
+          <img v-if="urlindex == actual" :src="url" @error="replaceByDefault" />
         </div>
         <p
           :class="{ off: actual >= imagemURL.length - 1 }"
@@ -148,7 +154,7 @@ span {
 
 img {
   max-width: clamp(15rem, 13rem + 10vw, 25rem);
-  height: auto;
+  max-height: clamp(10rem, 9rem + 5vw, 15rem);
 }
 
 .close {

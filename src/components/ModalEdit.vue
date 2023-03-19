@@ -101,7 +101,7 @@ span {
 .imageContainer {
   margin-top: 0.5rem;
   width: clamp(18rem, 14.4rem + 18vw, 36rem);
-  height: 10rem;
+  height: clamp(5rem, 4rem + 5vw, 10rem);
   display: flex;
   flex-flow: row nowrap;
   align-items: flex-start;
@@ -111,10 +111,10 @@ span {
 }
 
 img {
-  max-width: 10rem;
+  max-width: clamp(6rem, 5.2rem + 4vw, 10rem);
   height: auto;
-  margin-left: 1rem;
-  margin-top: 0.5rem;
+  margin-left: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
+  margin-top: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
 }
 
 .close {
@@ -134,14 +134,14 @@ img {
 }
 
 button:not(.selectFile) {
-  margin-top: 1rem;
+  margin-top: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
   align-self: center;
   font-family: "Museo";
   font-weight: 700;
   color: var(--clear0);
   background-color: var(--orange);
-  border-radius: 0.5rem;
-  padding: 1rem;
+  border-radius: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
+  padding: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
   border: 0;
   cursor: pointer;
   transition: 0.2s;
