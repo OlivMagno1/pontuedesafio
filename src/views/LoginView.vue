@@ -43,11 +43,11 @@ const Login = async () => {
     <img src="@/assets/pontue_logo.png" />
     <form @submit.prevent="Login">
       <label>
-        <span>login</span>
+        <span>Login</span>
         <input v-model="email" />
       </label>
       <label>
-        <span>senha</span>
+        <span>Senha</span>
         <input type="password" v-model="password" />
         <span class="alert">
           {{ alert_message }}
@@ -65,9 +65,9 @@ const Login = async () => {
 
 <style scoped>
 .background {
-  background-color: var(--primary);
+  background: linear-gradient(to bottom right, var(--primary), var(--purple));
   width: 100vw;
-  height: 100vh;
+  height: calc(100 * var(--doc-vh));
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -83,7 +83,7 @@ label {
 
 form {
   background-color: var(--clear0);
-  width: 24rem;
+  width: clamp(18rem, 17rem + 5vw, 23rem);
   height: 15rem;
   border-radius: 0.5rem;
   padding: 1rem;
@@ -102,7 +102,7 @@ label span {
 }
 
 input:not(.submit) {
-  width: 22rem;
+  width: clamp(16rem, 14.8rem + 6vw, 22rem);
   border-radius: 0.3rem;
   border: 1px solid gray;
   padding: 0.3rem;
@@ -115,8 +115,8 @@ img {
 
 .submit {
   margin: 0 0 1rem 0.5rem;
-  padding: 0.3rem;
-  width: 22.7rem;
+  padding: 0.5rem 0.3rem;
+  width: clamp(16.7rem, 15.5rem + 6vw, 22.7rem);
   border: 0;
   border-radius: 0.3rem;
   background-color: var(--primary);

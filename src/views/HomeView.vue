@@ -60,8 +60,8 @@ const prevPage = () => {
   return;
 };
 
-const selectRedacao = (entry, index) => {
-  BuscaRedacao(entry.id).then(function (redacaoResult) {
+const selectRedacao = async (entry, index) => {
+  await BuscaRedacao(entry.id).then(function (redacaoResult) {
     redacaoZoom.value = redacaoResult;
     redacaoSelect.value = index + tabelaPage.value;
     for (var i in redacaoResult.urls) {
@@ -77,9 +77,10 @@ const fecharRedacao = () => {
   redacaoSelect.value = -1;
 };
 
-const abrirModalDelete = (entry, index) => {
-  modalDelete.value = true;
-  selectRedacao(entry, index);
+const abrirModalDelete = async (entry, index) => {
+  selectRedacao(entry, index).then(function () {
+    modalDelete.value = true;
+  });
 };
 
 const fecharModalDelete = () => {
@@ -88,8 +89,9 @@ const fecharModalDelete = () => {
 };
 
 const abrirModalEdit = (entry, index) => {
-  modalEdit.value = true;
-  selectRedacao(entry, index);
+  selectRedacao(entry, index).then(function () {
+    modalEdit.value = true;
+  });
 };
 
 const fecharModalEdit = () => {
@@ -106,8 +108,9 @@ const fecharModalNew = () => {
 };
 
 const abrirModalVer = (entry, index) => {
-  modalVer.value = true;
-  selectRedacao(entry, index);
+  selectRedacao(entry, index).then(function () {
+    modalVer.value = true;
+  });
 };
 
 const fecharModalVer = () => {
@@ -123,9 +126,9 @@ onMounted(() => {
 <template>
   <div class="backdrop">
     <div class="menu">
-      <img src="@/assets/pontue_logo.png" />
-      <h2>{{ nomeAluno }}</h2>
-      <p title="não implementado">Logout</p>
+      <img class="logo" src="@/assets/pontue_logo.png" />
+      <h2 class="nomeAluno">{{ nomeAluno }}</h2>
+      <p class="nomeAluno" title="não implementado">Logout</p>
     </div>
     <span @click="abrirModalNew()" class="newRed">
       <font-awesome-icon icon="fa-solid fa-plus" />
@@ -213,8 +216,8 @@ onMounted(() => {
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
-  width: 100vw;
-  height: 100vh;
+  width: clamp(20rem, 100vw, 120rem);
+  height: calc(100 * var(--doc-vh));
   background-color: var(--clear1);
 }
 
@@ -229,14 +232,15 @@ onMounted(() => {
   color: var(--primary);
   cursor: default;
 
-  height: 5rem;
+  height: clamp(3rem, 2.6rem + 2vw, 5rem);
   width: 100vw;
 }
 
 .header {
   background-color: var(--clear2);
-  height: 3rem;
-  border-radius: 1rem 1rem 0 0;
+  height: clamp(1.5rem, 1.2rem + 1.5vw, 3rem);
+  border-radius: clamp(0.3rem, 0.16rem + 0.7vw, 1rem)
+    clamp(0.3rem, 0.16rem + 0.7vw, 1rem) 0 0;
 }
 
 .table,
@@ -249,7 +253,7 @@ onMounted(() => {
 }
 
 .table {
-  height: 3rem;
+  height: clamp(1.5rem, 1.2rem + 1.5vw, 3rem);
   background-color: var(--clear0);
 }
 
@@ -258,8 +262,9 @@ onMounted(() => {
 }
 
 .col {
-  width: 18rem;
-  margin-right: 2rem;
+  font-size: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
+  width: clamp(6rem, 3.6rem + 12vw, 18rem);
+  margin-right: clamp(0.5rem, 0.2rem + 1.5vw, 2rem);
 }
 
 .tools {
@@ -274,9 +279,9 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 2.4rem;
-  width: 4rem;
-  border-radius: 0.5rem;
+  height: clamp(1rem, 0.72rem + 1.4vw, 2.4rem);
+  width: clamp(1.5rem, 1rem + 2.5vw, 4rem);
+  border-radius: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
   transition: 0.2s;
   cursor: pointer;
 }
@@ -297,7 +302,7 @@ onMounted(() => {
 }
 
 .tools .color1:hover {
-  background-color: var(--primary);
+  background-color: var(--accent);
   color: white;
 }
 
@@ -313,7 +318,7 @@ onMounted(() => {
 
 .nav {
   position: absolute;
-  bottom: 5rem;
+  bottom: clamp(2rem, 1.4rem + 3vw, 5rem);
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -325,7 +330,7 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   height: 2rem;
-  width: 3rem;
+  width: 2.5rem;
   margin: 0.5rem;
 }
 
@@ -333,7 +338,7 @@ onMounted(() => {
   color: var(--primary);
   background-color: var(--clear0);
   height: 2rem;
-  width: 3rem;
+  width: 2.5rem;
   border-radius: 0.5rem;
   border: 0;
   cursor: pointer;
@@ -351,14 +356,14 @@ onMounted(() => {
 
 .newRed {
   position: absolute;
-  bottom: 5rem;
-  right: 10rem;
+  bottom: clamp(2rem, 1.4rem + 3vw, 5rem);
+  left: clamp(15rem, -2rem + 85vw, 100rem);
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 5rem;
-  width: 5rem;
-  height: 5rem;
+  border-radius: clamp(3rem, 2.6rem + 2vw, 5rem);
+  width: clamp(3rem, 2.6rem + 2vw, 5rem);
+  height: clamp(3rem, 2.6rem + 2vw, 5rem);
   color: var(--clear0);
   background-color: var(--primary);
   font-size: 1rem;
@@ -368,5 +373,13 @@ onMounted(() => {
 
 .newRed:hover {
   background-color: var(--accent);
+}
+
+.logo {
+  width: clamp(3rem, 1.6rem + 7vw, 10rem);
+}
+
+.nomeAluno {
+  font-size: clamp(0.8rem, 0.68rem + 0.6vw, 1.4rem);
 }
 </style>
