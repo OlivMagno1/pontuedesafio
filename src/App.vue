@@ -17,6 +17,7 @@
   --clear3: #b8b6c2;
   --dark: #000000;
   --teal: #2f98bd;
+  --danger: #ca3c25;
 }
 
 @font-face {

@@ -12,15 +12,11 @@ export default {
       <span class="close" @click="this.fecharModal()">voltar</span>
     </div>
     <div class="details">
-      <p>
-        Número da redação: <span>{{ redacaoZoom.numero }}</span>
-      </p>
-      <p>
-        Data de criação: <span>{{ redacaoZoom.created_at }}</span>
-      </p>
-      <div v-for="(url, urlindex) in imagemURL" :key="urlindex">
-        <img :src="url" />
-      </div>
+      <form>
+        <input />
+        <button class="selectFile">Selecionar arquivo</button>
+      </form>
+      <button @click="this.fecharModal()">Criar</button>
     </div>
   </div>
 </template>
@@ -32,7 +28,7 @@ export default {
   color: var(--clear0);
   border-radius: 1rem 1rem 0 0;
   height: 3rem;
-  width: 40rem;
+  width: 24rem;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -62,10 +58,11 @@ h2 {
 .details {
   display: flex;
   flex-flow: column nowrap;
-  align-items: flex-start;
-  width: 36rem;
-  height: 28rem;
-  padding: 2rem;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 21rem;
+  height: 9rem;
+  padding: 1.5rem;
   border-radius: 0 0 1rem 1rem;
   background-color: var(--clear2);
 }
@@ -97,5 +94,22 @@ img {
 .close:hover {
   background-color: white;
   color: var(--primary);
+}
+
+button:not(.selectFile) {
+  font-family: "Museo";
+  font-weight: 700;
+  color: var(--clear0);
+  background-color: var(--primary);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: 0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  color: var(--primary);
+  background-color: var(--clear0);
 }
 </style>

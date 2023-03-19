@@ -119,7 +119,7 @@ onMounted(() => {
       <h2>Nome do aluno</h2>
       <p>Logout</p>
     </div>
-    <span @click="abrirModalNew()" id="newRed">Nova Redação</span>
+    <span @click="abrirModalNew()" class="newRed">Criar</span>
     <div class="header">
       <p class="col">Número da redação</p>
       <p class="col">Data de criação</p>
@@ -266,19 +266,19 @@ onMounted(() => {
   opacity: 0.5;
 }
 
-#newRed {
+.newRed {
   position: absolute;
-  top: 5rem;
-  right: 5rem;
+  bottom: 5rem;
+  right: 10rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 2rem;
-  width: 3rem;
-  height: 3rem;
-  background-color: var(--clear0);
-  font-size: 0.5rem;
-  color: var(--primary);
+  border-radius: 5rem;
+  width: 5rem;
+  height: 5rem;
+  background-color: var(--primary);
+  font-size: 1rem;
+  color: var(--clear1);
   cursor: pointer;
   transition: 0.2s;
 }
