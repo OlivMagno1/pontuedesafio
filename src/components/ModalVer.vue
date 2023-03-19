@@ -56,10 +56,14 @@ export default {
           <font-awesome-icon icon="fa-solid fa-chevron-left" />
         </p>
         <div v-for="(url, urlindex) in imagemURL" :key="urlindex">
-          <img v-if="urlindex == actual" :src="url" @error="replaceByDefault" />
+          <img
+            v-show="urlindex == actual"
+            :src="url"
+            @error="replaceByDefault"
+          />
         </div>
         <p
-          :class="{ off: actual >= imagemURL.length - 1 }"
+          :class="{ off: actual == imagemURL.length - 1 }"
           @click="nextImage(imagemURL)"
           title="Próxima página"
         >
@@ -146,6 +150,7 @@ span {
 .imageContainer {
   margin-top: clamp(0rem, -0.6rem + 3vw, 3rem);
   width: clamp(18rem, 14.4rem + 18vw, 36rem);
+  height: clamp(10rem, 9rem + 5vw, 15rem);
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -174,6 +179,6 @@ img {
 }
 
 .off {
-  display: none;
+  opacity: 0;
 }
 </style>
