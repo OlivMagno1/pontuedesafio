@@ -18,6 +18,10 @@ export default {
       <p>
         Data de criação: <span>{{ redacaoZoom.created_at }}</span>
       </p>
+      <form>
+        <input />
+        <button class="selectFile">Selecionar arquivo</button>
+      </form>
       <div v-for="(url, urlindex) in imagemURL" :key="urlindex">
         <img :src="url" />
       </div>
