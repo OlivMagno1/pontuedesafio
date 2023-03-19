@@ -39,43 +39,92 @@ const Login = async () => {
 </script>
 
 <template>
-  <div>
-    <h1>Pontue!</h1>
+  <div class="background">
+    <img src="@/assets/pontue_logo.png" />
     <form @submit.prevent="Login">
       <label>
-        <span>e-mail</span>
-        <input v-model="email" placeholder="seu@email.com" />
+        <span>login</span>
+        <input v-model="email" />
       </label>
       <label>
-        <span>senha:</span>
-        <input type="password" v-model="password" placeholder="••••••••" />
+        <span>senha</span>
+        <input type="password" v-model="password" />
         <span class="alert">
           {{ alert_message }}
         </span>
       </label>
-      <input type="submit" value="Entrar" @click="check_alert = false" />
+      <input
+        class="submit"
+        type="submit"
+        value="Entrar"
+        @click="check_alert = false"
+      />
     </form>
   </div>
 </template>
 
 <style scoped>
+.background {
+  background-color: var(--primary);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
 form,
 label {
   display: flex;
   flex-flow: column nowrap;
+  align-items: flex-start;
 }
 
 form {
-  background-color: var(--primary);
+  background-color: var(--clear0);
   width: 24rem;
-  height: 30rem;
-  border-radius: 1rem;
+  height: 15rem;
+  border-radius: 0.5rem;
+  padding: 1rem;
 }
 
 label {
+  color: var(--dark);
+  font-family: "calibri";
+  font-weight: 700;
+  margin: 0 0 1rem 0.5rem;
+}
+
+label span {
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem 0;
+}
+
+input:not(.submit) {
+  width: 22rem;
+  border-radius: 0.3rem;
+  border: 1px solid gray;
+  padding: 0.3rem;
+}
+
+img {
+  margin: 1rem;
+  border-radius: 0.5rem;
+}
+
+.submit {
+  margin: 0 0 1rem 0.5rem;
+  padding: 0.3rem;
+  width: 22.7rem;
+  border: 0;
+  border-radius: 0.3rem;
+  background-color: var(--primary);
   color: var(--clear0);
-  width: 18rem;
-  font-family: "Museo";
-  font-weight: 100;
+  transition: 0.2s;
+}
+
+.submit:hover {
+  background-color: var(--accent);
 }
 </style>

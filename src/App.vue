@@ -15,6 +15,7 @@
   --clear1: #efeef4;
   --clear2: #dddce6;
   --clear3: #b8b6c2;
+  --clear4: #f5f5f5;
   --dark: #000000;
   --teal: #2f98bd;
   --danger: #ca3c25;
