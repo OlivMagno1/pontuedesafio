@@ -34,10 +34,8 @@ export default {
       <span class="close" @click="this.fecharModal()">voltar</span>
     </div>
     <div class="details">
-      <div>
-        <input type="file" name="file" multiple ref="files" />
-        <button @click="sendFile">Criar</button>
-      </div>
+      <input class="input" type="file" name="file" multiple ref="files" />
+      <button @click="sendFile">Criar</button>
     </div>
     <div class="clickToClose" @click="this.fecharModal()"></div>
   </div>
@@ -49,9 +47,11 @@ export default {
   position: relative;
   background-color: var(--primary);
   color: var(--clear0);
-  border-radius: 1rem 1rem 0 0;
-  height: 3rem;
-  width: 24rem;
+  color: var(--clear0);
+  border-radius: clamp(0.3rem, 0.16rem + 0.7vw, 1rem)
+    clamp(0.3rem, 0.16rem + 0.7vw, 1rem) 0 0;
+  height: clamp(1.5rem, 1.2rem + 1.5vw, 3rem);
+  width: clamp(14rem, 12rem + 10vw, 24rem);
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -60,7 +60,7 @@ export default {
 
 h2 {
   margin-left: 1rem;
-  font-size: 1.4rem;
+  font-size: clamp(0.8rem, 0.68rem + 0.6vw, 1.4rem);
   font-weight: 700;
   cursor: default;
 }
@@ -92,10 +92,11 @@ h2 {
   flex-flow: column nowrap;
   align-items: center;
   justify-content: space-evenly;
-  width: 21rem;
-  height: 9rem;
-  padding: 1.5rem;
-  border-radius: 0 0 1rem 1rem;
+  width: clamp(12.25rem, 10.5rem + 8.75vw, 21rem);
+  height: clamp(7.5rem, 7.2rem + 1.5vw, 9rem);
+  padding: clamp(0.875rem, 0.75rem + 0.625vw, 1.5rem);
+  border-radius: 0 0 clamp(0.3rem, 0.16rem + 0.7vw, 1rem)
+    clamp(0.3rem, 0.16rem + 0.7vw, 1rem);
   background-color: var(--clear2);
 }
 
@@ -114,11 +115,12 @@ img {
 }
 
 .close {
+  font-size: clamp(0.6rem, 0.52rem + 0.4vw, 1rem);
   position: absolute;
   margin-right: 1rem;
   right: 0;
   cursor: pointer;
-  border-radius: 0.5rem;
+  border-radius: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
   padding: 0.2rem;
   transition: 0.2s;
 }
@@ -143,5 +145,9 @@ button:not(.selectFile) {
 button:hover {
   color: var(--primary);
   background-color: var(--clear0);
+}
+
+.input {
+  width: clamp(12.25rem, 10.5rem + 8.75vw, 21rem);
 }
 </style>

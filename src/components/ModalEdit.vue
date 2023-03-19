@@ -36,9 +36,10 @@ export default {
   position: relative;
   background-color: var(--orange);
   color: var(--clear0);
-  border-radius: 1rem 1rem 0 0;
-  height: 3rem;
-  width: 40rem;
+  border-radius: clamp(0.3rem, 0.16rem + 0.7vw, 1rem)
+    clamp(0.3rem, 0.16rem + 0.7vw, 1rem) 0 0;
+  height: clamp(1.5rem, 1.2rem + 1.5vw, 3rem);
+  width: clamp(20rem, 16rem + 20vw, 40rem);
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -47,11 +48,10 @@ export default {
 
 h2 {
   margin-left: 1rem;
-  font-size: 1.4rem;
+  font-size: clamp(0.8rem, 0.68rem + 0.6vw, 1.4rem);
   font-weight: 700;
   cursor: default;
 }
-
 .modal-background {
   position: absolute;
   top: 0;
@@ -78,14 +78,16 @@ h2 {
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
-  width: 36rem;
-  height: 28rem;
-  padding: 2rem;
-  border-radius: 0 0 1rem 1rem;
+  width: clamp(18rem, 14.4rem + 18vw, 36rem);
+  height: clamp(15rem, 12.4rem + 13vw, 28rem);
+  padding: clamp(1rem, 0.8rem + 1vw, 2rem);
+  border-radius: 0 0 clamp(0.3rem, 0.16rem + 0.7vw, 1rem)
+    clamp(0.3rem, 0.16rem + 0.7vw, 1rem);
   background-color: var(--clear2);
 }
 
 .details p {
+  font-size: clamp(0.6rem, 0.52rem + 0.4vw, 1rem);
   margin-bottom: 1rem;
 }
 
@@ -94,23 +96,37 @@ span {
   opacity: 0.8;
 }
 
+.imageContainer {
+  margin-top: clamp(0rem, -0.6rem + 3vw, 3rem);
+  width: clamp(18rem, 14.4rem + 18vw, 36rem);
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 img {
-  max-width: 34rem;
+  max-width: clamp(15rem, 13rem + 10vw, 25rem);
   height: auto;
 }
 
 .close {
+  font-size: clamp(0.6rem, 0.52rem + 0.4vw, 1rem);
   position: absolute;
   margin-right: 1rem;
   right: 0;
   cursor: pointer;
-  border-radius: 0.5rem;
+  border-radius: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
   padding: 0.2rem;
   transition: 0.2s;
 }
 
 .close:hover {
   background-color: white;
-  color: var(--primary);
+  color: var(--orange);
+}
+
+.off {
+  display: none;
 }
 </style>
