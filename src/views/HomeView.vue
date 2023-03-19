@@ -10,6 +10,7 @@ import {
   BuscaImagem,
 } from "../assets/functions/functions.js";
 
+const nomeAluno = ref("");
 const tabela = ref([]);
 const tabelaPage = ref(0);
 const redacaoSelect = ref(-1);
@@ -42,6 +43,9 @@ const redacaoZoom = ref({
 const carrega = () => {
   BuscaRedAluno().then(function (result) {
     tabela.value = result;
+    BuscaRedacao(tabela.value[0].id).then(function (buscaNome) {
+      nomeAluno.value = buscaNome.aluno.nome_completo;
+    });
   });
 };
 
@@ -119,11 +123,13 @@ onMounted(() => {
 <template>
   <div class="backdrop">
     <div class="menu">
-      <h1>Pontue</h1>
-      <h2>Nome do aluno</h2>
-      <p>Logout</p>
+      <img src="@/assets/pontue_logo.png" />
+      <h2>{{ nomeAluno }}</h2>
+      <p title="não implementado">Logout</p>
     </div>
-    <span @click="abrirModalNew()" class="newRed">Criar</span>
+    <span @click="abrirModalNew()" class="newRed">
+      <font-awesome-icon icon="fa-solid fa-plus" />
+    </span>
     <div class="header">
       <p class="col">Número da redação</p>
       <p class="col">Data de criação</p>
@@ -140,23 +146,38 @@ onMounted(() => {
       <p class="col">{{ entry.numero }}</p>
       <p class="col">{{ entry.created_at }}</p>
       <div class="col tools">
-        <p @click="abrirModalVer(entry, index)">Ver</p>
-        <p @click="abrirModalEdit(entry, index)">Editar</p>
-        <p @click="abrirModalDelete(entry, index)">Excluir</p>
+        <p title="Ver" class="color1" @click="abrirModalVer(entry, index)">
+          <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+        </p>
+        <p title="Editar" class="color2" @click="abrirModalEdit(entry, index)">
+          <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+        </p>
+        <p
+          title="Excluir"
+          class="color3"
+          @click="abrirModalDelete(entry, index)"
+        >
+          <font-awesome-icon icon="fa-solid fa-trash-can" />
+        </p>
       </div>
     </div>
     <div class="nav">
-      <button :class="{ off: tabelaPage == 0 }" @click="prevPage">
-        Página anterior
-      </button>
-      <h2>{{ tabelaPage / 10 + 1 }}</h2>
       <button
+        class="navButton"
+        :class="{ off: tabelaPage == 0 }"
+        @click="prevPage"
+      >
+        <font-awesome-icon icon="fa-solid fa-chevron-left" />
+      </button>
+      <h2 class="navCounter">{{ tabelaPage / 10 + 1 }}</h2>
+      <button
+        class="navButton"
         :class="{
           off: tabelaPage + 11 > tabela.length,
         }"
         @click="nextPage"
       >
-        Página seguinte
+        <font-awesome-icon icon="fa-solid fa-chevron-right" />
       </button>
     </div>
     <ModalDelete
@@ -206,6 +227,7 @@ onMounted(() => {
   align-items: center;
   background-color: var(--clear1);
   color: var(--primary);
+  cursor: default;
 
   height: 5rem;
   width: 100vw;
@@ -231,14 +253,13 @@ onMounted(() => {
   background-color: var(--clear0);
 }
 
+.table:hover {
+  background-color: var(--clear4);
+}
+
 .col {
   width: 18rem;
   margin-right: 2rem;
-}
-
-.tools p:hover {
-  background-color: var(--primary);
-  color: white;
 }
 
 .tools {
@@ -255,11 +276,39 @@ onMounted(() => {
   justify-content: center;
   height: 2.4rem;
   width: 4rem;
-  color: var(--primary);
-  background-color: var(--clear1);
   border-radius: 0.5rem;
   transition: 0.2s;
   cursor: pointer;
+}
+
+.tools .color1 {
+  color: var(--primary);
+  background-color: var(--clear1);
+}
+
+.tools .color2 {
+  color: var(--orange);
+  background-color: var(--clear1);
+}
+
+.tools .color3 {
+  color: var(--danger);
+  background-color: var(--clear1);
+}
+
+.tools .color1:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+.tools .color2:hover {
+  background-color: var(--orange);
+  color: white;
+}
+
+.tools .color3:hover {
+  background-color: var(--danger);
+  color: white;
 }
 
 .nav {
@@ -267,10 +316,37 @@ onMounted(() => {
   bottom: 5rem;
   display: flex;
   flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.navCounter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  width: 3rem;
+  margin: 0.5rem;
+}
+
+.navButton {
+  color: var(--primary);
+  background-color: var(--clear0);
+  height: 2rem;
+  width: 3rem;
+  border-radius: 0.5rem;
+  border: 0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.navButton:hover:not(.off) {
+  background-color: var(--primary);
+  color: var(--clear0);
 }
 
 .off {
-  opacity: 0.5;
+  opacity: 0;
 }
 
 .newRed {
@@ -283,14 +359,14 @@ onMounted(() => {
   border-radius: 5rem;
   width: 5rem;
   height: 5rem;
+  color: var(--clear0);
   background-color: var(--primary);
   font-size: 1rem;
-  color: var(--clear1);
   cursor: pointer;
   transition: 0.2s;
 }
 
-#newRed:hover {
-  transform: scale(1.2);
+.newRed:hover {
+  background-color: var(--accent);
 }
 </style>
