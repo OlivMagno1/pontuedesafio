@@ -2,6 +2,28 @@
 export default {
   name: "ModalNew",
   props: ["abrirModal", "fecharModal", "redacaoZoom", "imagemURL"],
+  methods: {
+    async sendFile() {
+      let formData = new FormData();
+      for (let file of this.$refs.files.files) {
+        formData.append("file", file);
+      }
+      let res = await fetch(
+        `https://desafio.pontue.com.br/alunos/redacao/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "Access-Control-Request-Headers": "authorization",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          body: formData,
+        }
+      ).then((res) => res.json());
+      console.log(res);
+      this.fecharModal();
+    },
+  },
 };
 </script>
 
@@ -12,11 +34,10 @@ export default {
       <span class="close" @click="this.fecharModal()">voltar</span>
     </div>
     <div class="details">
-      <form>
-        <input />
-        <button class="selectFile">Selecionar arquivo</button>
-      </form>
-      <button @click="this.fecharModal()">Criar</button>
+      <div>
+        <input type="file" name="file" multiple ref="files" />
+        <button @click="sendFile">Criar</button>
+      </div>
     </div>
   </div>
 </template>

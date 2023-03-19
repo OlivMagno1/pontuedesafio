@@ -32,7 +32,7 @@ export default {
 <style scoped>
 .header {
   position: relative;
-  background-color: var(--primary);
+  background-color: var(--orange);
   color: var(--clear0);
   border-radius: 1rem 1rem 0 0;
   height: 3rem;
