@@ -1,7 +1,7 @@
 <script>
 export default {
   name: "ModalNew",
-  props: ["abrirModal", "fecharModal", "recarrega", "redacaoZoom", "imagemURL"],
+  props: ["abrirModal", "fecharModal", "recarrega", "redacaoZoom"],
   methods: {
     async sendFile() {
       let formData = new FormData();

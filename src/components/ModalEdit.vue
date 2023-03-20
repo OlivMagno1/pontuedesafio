@@ -1,14 +1,32 @@
 <script>
+import { ref } from "vue";
 export default {
   name: "ModalEdit",
-  props: ["abrirModal", "fecharModal", "redacaoZoom", "recarrega", "imagemURL"],
+  props: ["abrirModal", "fecharModal", "redacaoZoom", "recarrega"],
   methods: {
-    async updateFile() {
+    checkUnkeep(unkeep, URLindex) {
+      return unkeep.indexOf(URLindex) != -1;
+    },
+
+    atualizaUnkeep(unkeep, URLindex) {
+      if (unkeep.length == 0) unkeep.push(URLindex);
+      else if (unkeep.indexOf(URLindex) != -1)
+        unkeep.splice(unkeep.indexOf(URLindex), 1);
+      else unkeep.push(URLindex);
+    },
+
+    async updateFile(unkeep) {
       let formData = new FormData();
-      formData.append("urls[]", this.redacaoZoom.id);
+      let urlsID = [];
+      for (let url of this.redacaoZoom.urls) {
+        if (unkeep.indexOf(this.redacaoZoom.urls.indexOf(url)) == -1)
+          urlsID.push(url.id);
+      }
+      formData.append("urls[]", urlsID);
       for (let file of this.$refs.files.files) {
         formData.append("file[]", file);
       }
+
       await fetch(
         `https://desafio.pontue.com.br/redacao/${this.redacaoZoom.id}/update`,
         {
@@ -22,7 +40,13 @@ export default {
       );
       this.fecharModal();
       this.recarrega();
+      unkeep = [];
     },
+  },
+  setup() {
+    let unkeep = ref([]);
+
+    return { unkeep };
   },
 };
 </script>
@@ -40,15 +64,19 @@ export default {
       <p>
         Data de criação: <span>{{ redacaoZoom.created_at }}</span>
       </p>
-      <p>Selecione as redações que deseja remover abaixo</p>
+      <h3>Selecione as redações que deseja remover abaixo:</h3>
       <div class="imageContainer">
-        <div v-for="(url, urlindex) in imagemURL" :key="urlindex">
-          <img :src="url" />
+        <div v-for="(url, urlindex) in redacaoZoom.urls" :key="urlindex">
+          <img
+            :class="{ deselect: checkUnkeep(unkeep, urlindex) }"
+            @click="atualizaUnkeep(unkeep, urlindex)"
+            :src="url.url"
+          />
         </div>
       </div>
-      <p>Selecione os arquivos para adicionar</p>
+      <h3>Selecione os arquivos para adicionar:</h3>
       <input class="input" type="file" name="file" multiple ref="files" />
-      <button @click="updateFile()">Criar</button>
+      <button @click="updateFile(unkeep)">Editar</button>
     </div>
     <div class="clickToClose" @click="this.fecharModal()"></div>
   </div>
@@ -98,6 +126,7 @@ h2 {
 }
 
 .details {
+  position: relative;
   z-index: 150;
   display: flex;
   flex-flow: column nowrap;
@@ -137,6 +166,7 @@ img {
   height: auto;
   margin-left: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
   margin-top: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
+  transition: 0.2s;
 }
 
 .close {
@@ -156,6 +186,8 @@ img {
 }
 
 button:not(.selectFile) {
+  position: absolute;
+  bottom: 1rem;
   margin-top: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
   align-self: center;
   font-family: "Museo";
@@ -176,5 +208,16 @@ button:hover {
 
 .off {
   display: none;
+}
+
+.deselect {
+  opacity: 0.5;
+}
+
+h3 {
+  margin-top: (0.5rem, 0.3rem + 1vw, 1.5rem);
+  margin-bottom: 0.25rem;
+  font-size: clamp(0.8rem, 0.74rem + 0.3vw, 1.1rem);
+  text-align: justify;
 }
 </style>

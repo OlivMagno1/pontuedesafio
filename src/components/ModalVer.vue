@@ -2,7 +2,7 @@
 import { ref } from "vue";
 export default {
   name: "ModalVer",
-  props: ["abrirModal", "fecharModal", "redacaoZoom", "imagemURL"],
+  props: ["abrirModal", "fecharModal", "redacaoZoom"],
   methods: {
     replaceByDefault(e) {
       e.target.src = require(`@/assets/images/placeholder.jpg`);
@@ -55,16 +55,16 @@ export default {
         >
           <font-awesome-icon icon="fa-solid fa-chevron-left" />
         </p>
-        <div v-for="(url, urlindex) in imagemURL" :key="urlindex">
+        <div v-for="(url, urlindex) in redacaoZoom.urls" :key="urlindex">
           <img
             v-show="urlindex == actual"
-            :src="url"
+            :src="url.url"
             @error="replaceByDefault"
           />
         </div>
         <p
-          :class="{ off: actual == imagemURL.length - 1 }"
-          @click="nextImage(imagemURL)"
+          :class="{ off: actual == redacaoZoom.urls.length - 1 }"
+          @click="nextImage(redacaoZoom.urls[0].url)"
           title="Próxima página"
         >
           <font-awesome-icon icon="fa-solid fa-chevron-right" />

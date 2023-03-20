@@ -7,7 +7,6 @@ import ModalVer from "../components/ModalVer.vue";
 import {
   BuscaRedacao,
   BuscaRedAluno,
-  BuscaImagem,
   Logout,
 } from "../assets/functions/functions.js";
 import { useRouter } from "vue-router";
@@ -21,8 +20,6 @@ const modalDelete = ref(false);
 const modalEdit = ref(false);
 const modalNew = ref(false);
 const modalVer = ref(false);
-const imagemURL = ref([]);
-const existeImagem = ref(true);
 const redacaoZoom = ref({
   id: "",
   aluno: {
@@ -69,16 +66,9 @@ const prevPage = () => {
 };
 
 const selectRedacao = async (entry, index) => {
-  imagemURL.value = [];
   await BuscaRedacao(entry.id).then(function (redacaoResult) {
     redacaoZoom.value = redacaoResult;
     redacaoSelect.value = index + tabelaPage.value;
-    for (var i in redacaoResult.urls) {
-      imagemURL.value[i] = redacaoResult.urls[i].url;
-    }
-  });
-  BuscaImagem(imagemURL.value).then(function (imagem) {
-    existeImagem.value = imagem != undefined && imagem != null;
   });
 };
 
@@ -209,20 +199,17 @@ onMounted(() => {
       :fecharModal="fecharModalEdit"
       :redacaoZoom="redacaoZoom"
       :recarrega="carrega"
-      :imagemURL="imagemURL"
     />
     <ModalNew
       :abrirModal="modalNew"
       :fecharModal="fecharModalNew"
       :redacaoZoom="redacaoZoom"
       :recarrega="carrega"
-      :imagemURL="imagemURL"
     />
     <ModalVer
       :abrirModal="modalVer"
       :fecharModal="fecharModalVer"
       :redacaoZoom="redacaoZoom"
-      :imagemURL="imagemURL"
     />
   </div>
 </template>
