@@ -1,7 +1,29 @@
 <script>
 export default {
   name: "ModalEdit",
-  props: ["abrirModal", "fecharModal", "redacaoZoom", "imagemURL"],
+  props: ["abrirModal", "fecharModal", "redacaoZoom", "recarrega", "imagemURL"],
+  methods: {
+    async updateFile() {
+      let formData = new FormData();
+      formData.append("urls[]", this.redacaoZoom.id);
+      for (let file of this.$refs.files.files) {
+        formData.append("file[]", file);
+      }
+      await fetch(
+        `https://desafio.pontue.com.br/redacao/${this.redacaoZoom.id}/update`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          body: formData,
+          redirect: "follow",
+        }
+      );
+      this.fecharModal();
+      this.recarrega();
+    },
+  },
 };
 </script>
 
@@ -26,7 +48,7 @@ export default {
       </div>
       <p>Selecione os arquivos para adicionar</p>
       <input class="input" type="file" name="file" multiple ref="files" />
-      <button @click="sendFile()">Criar</button>
+      <button @click="updateFile()">Criar</button>
     </div>
     <div class="clickToClose" @click="this.fecharModal()"></div>
   </div>

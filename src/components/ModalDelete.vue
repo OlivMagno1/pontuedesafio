@@ -4,17 +4,13 @@ export default {
   props: ["abrirModal", "fecharModal", "recarrega", "redacaoZoom"],
   methods: {
     async Deletar(red_id) {
-      const res = await fetch(
-        `https://desafio.pontue.com.br/redacao/${red_id}/delete`,
-        {
-          method: "DELETE",
-          headers: {
-            "Access-Control-Request-Headers": "authorization",
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      ).then((res) => res.json());
-      console.log(res);
+      await fetch(`https://desafio.pontue.com.br/redacao/${red_id}/delete`, {
+        method: "DELETE",
+        headers: {
+          "Access-Control-Request-Headers": "authorization",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
       this.fecharModal();
       this.recarrega();
     },

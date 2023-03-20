@@ -69,6 +69,7 @@ const prevPage = () => {
 };
 
 const selectRedacao = async (entry, index) => {
+  imagemURL.value = [];
   await BuscaRedacao(entry.id).then(function (redacaoResult) {
     redacaoZoom.value = redacaoResult;
     redacaoSelect.value = index + tabelaPage.value;
@@ -207,12 +208,14 @@ onMounted(() => {
       :abrirModal="modalEdit"
       :fecharModal="fecharModalEdit"
       :redacaoZoom="redacaoZoom"
+      :recarrega="carrega"
       :imagemURL="imagemURL"
     />
     <ModalNew
       :abrirModal="modalNew"
       :fecharModal="fecharModalNew"
       :redacaoZoom="redacaoZoom"
+      :recarrega="carrega"
       :imagemURL="imagemURL"
     />
     <ModalVer

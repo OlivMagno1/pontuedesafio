@@ -1,26 +1,23 @@
 <script>
 export default {
   name: "ModalNew",
-  props: ["abrirModal", "fecharModal", "redacaoZoom", "imagemURL"],
+  props: ["abrirModal", "fecharModal", "recarrega", "redacaoZoom", "imagemURL"],
   methods: {
     async sendFile() {
       let formData = new FormData();
       for (let file of this.$refs.files.files) {
-        formData.append("file", file);
+        formData.append("file[]", file);
       }
-      console.log(formData);
-      const res = await fetch(
-        `https://desafio.pontue.com.br/alunos/redacao/create`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-          body: formData,
-          redirect: "follow",
-        }
-      ).then((res) => res.json());
-      console.log(res);
+      await fetch(`https://desafio.pontue.com.br/alunos/redacao/create`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: formData,
+        redirect: "follow",
+      });
+      this.fecharModal();
+      this.recarrega();
     },
   },
 };
