@@ -13,3 +13,6 @@ Me preocupei bastante com a responsividade da aplicação, sendo ela utilizável
 A verificação se o e-mail é válido durante o login foi desativada pois no caso de teste me enviado, algumas entradas possuiam o caractere espaço, que é inviável em um endereço de e-mail. Porém, caso o usuário entre com dados errados, receberá uma mensagem de erro.  
 
 Busquei aproximar o design do projeto desenvolvido ao máximo possível com o website https://pontue.com.br , além de pegar o logo emprestado do site.  
+
+Temporariamente, deixarei a solução desenvolvida hosteada pelo Netlify, no seguinte link:  
+https://elaborate-gingersnap-b88306.netlify.app
